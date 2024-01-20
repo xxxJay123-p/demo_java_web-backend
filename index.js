@@ -5,6 +5,9 @@ import dontenv from "dotenv";
 
 // Route
 import authRoutes from "./routes/auth.js";
+import paymentRoutes from "./routes/payment.js";
+import coffeeRouters from "./routes/coffee.js";
+import productRouters from "./routes/product.js";
 
 //Start App
 const app = express();
@@ -26,8 +29,11 @@ mongoose
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/payment", paymentRoutes);
+app.use("api/coffee", coffeeRouters);
+app.use("api/product", productRouters);
 
 // Start the server
-const server = app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
 });
