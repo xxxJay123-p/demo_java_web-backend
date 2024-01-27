@@ -8,6 +8,8 @@ import morgan from "morgan";
 import userRouter from "./routes/userRouter.js";
 import productsRouter from "./routes/productRouter.js";
 import authRouter from "./routes/authRouter.js";
+import courseRoute from "./routes/courseRoutes.js";
+import applyRouter from "./routes/applyRouter.js";
 
 //auth controller
 import { protect, adminRoute } from "./controller/authController.js";
@@ -47,6 +49,8 @@ app.use("/products", productsRouter);
 app.use("/", authRouter);
 /* For regular users only */
 app.use("/users", protect, userRouter);
+app.use("/coruse", courseRoute);
+app.use("/applications", applyRouter);
 
 //* error api */
 app.get("*", (req, res) => {

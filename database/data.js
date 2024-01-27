@@ -3,6 +3,7 @@ import { User } from "../src/model/models.js";
 import { Diet } from "../src/model/models.js";
 import { Product } from "../src/model/models.js";
 import { Order } from "../src/model/models.js";
+import { Course } from "../src/model/course-model.js";
 
 const users = [
   {
@@ -19,6 +20,12 @@ const users = [
     email: "sara@sara.com",
     password: "sara123",
     role: "admin",
+  },
+  {
+    email: "instructor@instructor.com",
+    password: "instructor",
+    role: "instructor",
+    bio: "Jane Doe is an experienced barista and coffee roaster.",
   },
 ];
 
@@ -364,15 +371,29 @@ const dietsOnProduct = [
   },
 ];
 
+const courses = [
+  {
+    name: "Introduction to Coffee Roasting",
+    description:
+      "Learn the basics of coffee roasting, from sourcing green beans to roasting and cupping.",
+    imageUrl: "https://example.com/coffee-roasting.jpg",
+    price: 250,
+    duration_week: 5,
+    instructor: "61e816d7c520a976a0b8c9f5",
+  },
+];
+
 export async function seed() {
   // delete all existing data
   await User.deleteMany({});
   await Diet.deleteMany({});
   await Product.deleteMany({});
   await Order.deleteMany({});
+  await Course.deleteMany({});
 
-  // create users
+  // create
   const createdUsers = await User.create(users);
+  await Course.create(courses);
 
   // create diets
   const createdDiets = await Diet.create(diets);
