@@ -3,42 +3,52 @@ import bcrypt from "bcrypt";
 import { User } from "../model/models.js";
 
 const signup = async (req, res) => {
-  const userToCreate = {
-    ...req.body,
-  };
+  const { username, email, password } = req.body;
 
-  if (!userToCreate.email || !userToCreate.password) {
-    res.status(400).json({ error: "Missing email or password." });
+  if (username == null || email == null) {
+    res.status(400).json({ error: "Missing username/email or password." });
+    return;
   }
 
   try {
-    const securePassword = await bcrypt.hash(userToCreate.password, 10);
+    const existingUser = await User.findOne({ email });
 
-    userToCreate.password = securePassword;
+    if (existingUser) {
+      res.status(409).json({ error: "Email already exists." });
+      return;
+    }
+
+    const securePassword = await bcrypt.hash(password, 10);
 
     console.log(`inside signup backend:`, { securePassword });
 
     const user = await User.create({
-      data: {
-        ...userToCreate,
-      },
-      select: {
-        id: true,
-        role: true,
-      },
+      username,
+      email,
+      password: securePassword,
     });
 
     const token = createToken(user);
 
-    res.status(201).json({ token });
+    const userResponse = {
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      _id: user._id,
+    };
+
+    res.status(201).json({
+      message: "User successfully created",
+      user: userResponse,
+      token,
+    });
   } catch (error) {
     console.error("[ERROR] /signup route: ", error);
-
-    if (error.code === "P2002") {
-      res.status(501).json({
+    if (error.code === 11000) {
+      res.status(409).json({
         error: {
           ...error,
-          message: "User already exists.",
+          message: "Email already exists.",
         },
       });
     } else {
@@ -48,54 +58,42 @@ const signup = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const userCredentials = {
-    ...req.body,
-  };
+  const { email, password } = req.body;
 
-  if (!userCredentials.email || !userCredentials.password) {
+  if (!email || !password) {
     res.status(400).json({ error: "Missing email or password." });
+    return;
   }
 
   try {
-    const user = await User.findUnique({
-      where: {
-        email: userCredentials.email,
-      },
-      select: {
-        id: true,
-        role: true,
-        password: true,
-      },
-    });
+    const user = await User.findOne({ email });
 
     if (!user) {
-      res.status(401).json({ error: "Authentication failed." });
-      console.error("Authentication failed");
+      res.status(401).json({ error: "Authentication failed. User not found." });
+      return;
     }
 
-    console.log("Inside signin, passwords: ", {
-      fromRes: userCredentials.password,
-      fromDb: user.password,
-    });
+    const match = await bcrypt.compare(password, user.password);
 
-    const match = await bcrypt.compare(userCredentials.password, user.password);
-
-    if (match) {
-      const userToTokenize = {
-        ...user,
-      };
-
-      delete userToTokenize.password;
-
-      const token = createToken(userToTokenize);
-
-      res.status(201).json({ token });
-    } else {
-      res.status(401).json({ error: "Authentication failed." });
-      console.error("Authentication failed");
+    if (!match) {
+      res
+        .status(401)
+        .json({ error: "Authentication failed. Incorrect password." });
+      return;
     }
+
+    const userToTokenize = {
+      _id: user._id,
+      email: user.email,
+      role: user.role,
+    };
+
+    const token = createToken(userToTokenize);
+
+    res.status(200).json({ token });
   } catch (error) {
-    res.status(500).json({ error });
+    console.error("Error in login controller:", error);
+    res.status(500).json({ error: "An error occurred during login." });
   }
 };
 

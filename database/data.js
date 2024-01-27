@@ -4,24 +4,29 @@ import { Diet } from "../src/model/models.js";
 import { Product } from "../src/model/models.js";
 import { Order } from "../src/model/models.js";
 import { Course } from "../src/model/course-model.js";
+import bcrypt from "bcrypt";
 
 const users = [
   {
+    username: "tom123",
     email: "tom@tom.com",
     password: "tom123",
     role: "user",
   },
   {
+    username: "david123",
     email: "david@david.com",
     password: "david123",
     role: "user",
   },
   {
+    username: "admin",
     email: "sara@sara.com",
     password: "sara123",
     role: "admin",
   },
   {
+    username: "instructor",
     email: "instructor@instructor.com",
     password: "instructor",
     role: "instructor",
@@ -383,6 +388,16 @@ const courses = [
   },
 ];
 
+async function securePasswords(userList) {
+  const securedUsers = [];
+  for (let user of userList) {
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+    user.password = hashedPassword;
+    securedUsers.push(user);
+  }
+  return securedUsers;
+}
+
 export async function seed() {
   // delete all existing data
   await User.deleteMany({});
@@ -391,8 +406,11 @@ export async function seed() {
   await Order.deleteMany({});
   await Course.deleteMany({});
 
-  // create
-  const createdUsers = await User.create(users);
+  // create users with secured passwords
+  const securedUsers = await securePasswords(users);
+  await User.insertMany(securedUsers);
+
+  // create courses
   await Course.create(courses);
 
   // create diets

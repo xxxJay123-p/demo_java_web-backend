@@ -1,4 +1,7 @@
 import jwt from "jsonwebtoken";
+import dontenv from "dotenv";
+
+dontenv.config();
 
 const jwtSecret = process.env.JWT_SECRET;
 
