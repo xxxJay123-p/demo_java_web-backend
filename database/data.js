@@ -381,8 +381,29 @@ const courses = [
     name: "Introduction to Coffee Roasting",
     description:
       "Learn the basics of coffee roasting, from sourcing green beans to roasting and cupping.",
-    imageUrl: "https://example.com/coffee-roasting.jpg",
+    imageUrl:
+      "https://coffeeculture.asia/wp-content/uploads/2022/02/Best-Online-Coffee-Classes-For-Beginners-Or-Baristas.png",
     price: 250,
+    duration_week: 5,
+    instructor: "61e816d7c520a976a0b8c9f5",
+  },
+  {
+    name: "Introduction to Coffee Roasting(Level 2)",
+    description:
+      "Learn the basics of coffee roasting, from sourcing green beans to roasting and cupping.",
+    imageUrl:
+      "https://coffeeculture.asia/wp-content/uploads/2022/02/Best-Online-Coffee-Classes-For-Beginners-Or-Baristas.png",
+    price: 350,
+    duration_week: 5,
+    instructor: "61e816d7c520a976a0b8c9f5",
+  },
+  {
+    name: "Introduction to Coffee Roasting(Level 3)",
+    description:
+      "Learn the basics of coffee roasting, from sourcing green beans to roasting and cupping.",
+    imageUrl:
+      "https://coffeeculture.asia/wp-content/uploads/2022/02/Best-Online-Coffee-Classes-For-Beginners-Or-Baristas.png",
+    price: 550,
     duration_week: 5,
     instructor: "61e816d7c520a976a0b8c9f5",
   },
