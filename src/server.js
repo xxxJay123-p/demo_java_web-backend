@@ -27,7 +27,7 @@ app.disable("x-powered-by");
 
 // Middleware
 // cors { origin: "http://localhost:5000", credentials: true }
-app.use(cors({ origin: "http://localhost:5000", credentials: true })); // Enables the OPTIONS request check in our API
+app.use(cors({ credentials: true })); // Enables the OPTIONS request check in our API
 // app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
