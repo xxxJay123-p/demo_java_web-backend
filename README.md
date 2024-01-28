@@ -2,10 +2,10 @@
 
 This is a demo website for a Java Coffee Shop & Studio, featuring both a frontend and a backend.
 
-[Frontend Ropo](https://github.com/xxxJay123-p/demo_java_web)
-[Live Demo via cloudflare](https://demo-java-web.pages.dev/)
+- [Frontend Ropo](https://github.com/xxxJay123-p/demo_java_web)
+- [Live Demo via cloudflare](https://demo-java-web.pages.dev/)
 
-[Backend via render](https://demo-java-web-backend.onrender.com)
+- [Backend via render](https://demo-java-web-backend.onrender.com)
 ![Alt text](./asset/image.png)
 
 ## Backend
