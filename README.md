@@ -17,6 +17,22 @@ npm start
 
 This will start the server and make it available at `http://localhost:4000`.
 
+## Dependencies
+
+```json
+"dependencies": {
+        "bcrypt": "^5.1.1",
+        "cors": "^2.8.5",
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "jsonwebtoken": "^9.0.2",
+        "mongoose": "^8.0.4",
+        "morgan": "^1.10.0",
+        "nodemon": "^3.0.2",
+        "uuid": "^9.0.1"
+      }
+```
+
 ## API Endpoints
 
 The following API endpoints are available:
