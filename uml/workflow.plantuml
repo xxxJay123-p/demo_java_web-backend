@@ -1,0 +1,35 @@
+@startuml Java Coffee WorkFlow uml
+
+actor User
+
+
+participant App
+database DB
+
+
+User -> App: Register user
+App -> DB: Store user information
+
+User -> App: Login user
+App -> DB: Validate user credentials
+
+User -> App: Browse products
+App -> DB: Retrieve product information
+
+User -> App: Add product to cart
+App -> User: Update cart
+
+User -> App: Place order
+App -> DB: Store order information
+App -> User: Confirm order
+
+User -> App: Browse courses
+App -> DB: Retrieve course information
+
+User -> App: Apply to course
+App -> DB: Store application information
+
+User -> App: View application status
+App -> DB: Retrieve application information
+
+@enduml

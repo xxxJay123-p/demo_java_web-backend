@@ -1,0 +1,64 @@
+@startuml JAVA Coffee Class UML
+
+class User {
+  - username: String
+  - email: String
+  - password: String
+  - role: String
+}
+
+class Instructor {
+  - bio: String
+}
+
+Instructor <|-- User
+
+class Diet {
+  - name: String
+}
+
+class Product {
+  - type: String
+  - name: String
+  - description: String
+  - imageUrl: String
+  - price: Number
+  - syrup: String
+  - milk: String
+}
+
+Product "1" *-- "*" Diet : has
+
+class Course {
+  - name: String
+  - description: String
+  - imageUrl: String
+  - price: Number
+  - duration_week: Number
+  - instructor: Instructor
+}
+
+class Application {
+  - status: String
+  - message: String
+  - createdAt: Date
+  - user: User
+  - course: Course
+}
+
+class Order {
+  - city: String
+  - postCode: String
+  - road: String
+  - user: User
+  - products: Product[]
+}
+
+Order "1" *-- "*" Product : contains
+
+User "1" -- "*" Application : applies to 
+User "1" -- "*" Order : places
+Application -- "*" Course
+
+
+@enduml
